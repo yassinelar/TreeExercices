@@ -60,6 +60,29 @@ def isBalanced(root):
         return (abs(result) <= 1 and isBalanced(root.left) and isBalanced(root.right))
 
 
+def isSumProperty(root):
+    # code here
+    if root == None or root.left == None and root.right == None:
+        return 1
+    elif (root.left == None and root.right):
+        if (root.right.data == root.data) :
+            condition = 1
+        else:
+            condition = 0
+        return (condition and isSumProperty(root.right))
+    elif (root.right == None and root.left):
+        if (root.left.data == root.data) :
+            condition = 1
+        else:
+            condition = 0
+        return (condition and isSumProperty(root.left))
+    else:
+        if (root.left.data + root.right.data == root.data):
+            condition = 1
+        else:
+            condition = 0
+        return (condition and isSumProperty(root.left) and isSumProperty(root.right))
+
 
 if __name__ == '__main__':
     ''' Construct the following tree
@@ -79,17 +102,16 @@ if __name__ == '__main__':
     root.right.left = Node(1)
 
     # Height of binary tree
-    print(height(root))
+    print("Height: ", height(root))
 
     # Identical trees
     root1 = copy.deepcopy(root)
     root2 = copy.deepcopy(root)
     root1.right.right = Node(6)
-    print(isIdentical(root1, root2))
+    print("isIdentical: ", isIdentical(root1, root2))
 
     #Mirror tree
-    display(root)
-    print("\n")
+    print("Mirror: ")
     root_M = copy.deepcopy(root)
     mirror(root_M)
     display(root_M)
@@ -111,12 +133,32 @@ if __name__ == '__main__':
     root_sym.left.right = Node(8)
     root_sym.right.left = Node(8)
     root_sym.right.right = Node(2)
-    print("\n")
-    display(root_sym)
-    print("\n")
+    print("\n" + "isSymmetrical: ")
     print(isSymmetrical(root_sym))
 
     #Balanced Tree
     root_balanced = copy.deepcopy(root)
-    print("L: ", height(root.left), "R: ", height(root.right))
+    print("Balanced tree: " + "\n" + "L: ", height(root.left), "R: ", height(root.right))
     print(isBalanced(root))
+
+    #Children Sum parent
+    root_sum = copy.deepcopy(root)
+    print("isSumProperty")
+    print(isSumProperty(root))  #false
+    ''' Construct the following tree
+                      6
+                    /   \
+                   /     \
+                  3       3
+                 / \     / \
+                2   1   0   3  
+            '''
+
+    root_sum = Node(6)
+    root_sum.left = Node(3)
+    root_sum.right = Node(3)
+    root_sum.left.left = Node(2)
+    root_sum.left.right = Node(1)
+    root_sum.right.left = Node(0)
+    root_sum.right.right = Node(3)
+    print(isSumProperty(root_sum))  #True
