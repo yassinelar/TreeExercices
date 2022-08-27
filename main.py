@@ -6,6 +6,14 @@ class Node:
         self.left = None
 
 
+def display(root):
+    if root == None:
+        return None
+    else:
+        print(root.data, end = ' ')
+        display(root.left)
+        display(root.right)
+
 def height(root):
     if (root == None) :
         return 0
@@ -19,6 +27,19 @@ def isIdentical(root1, root2):
         return True
     else:
         return True and isIdentical(root1.left, root2.left) and isIdentical(root1.right, root2.right)
+
+def switch(root):
+    t = root.left
+    root.left = root.right
+    root.right = t
+
+def mirror(root):
+    if (root == None):
+        return None
+    else:
+        mirror(root.left)
+        mirror(root.right)
+        switch(root)
 
 
 if __name__ == '__main__':
@@ -41,7 +62,15 @@ if __name__ == '__main__':
     # Height of binary tree
     print(height(root))
 
-    # identical trees
+    # Identical trees
     root1 = copy.deepcopy(root)
+    root2 = copy.deepcopy(root)
     root1.right.right = Node(6)
-    print(isIdentical(root, root1))
+    print(isIdentical(root1, root2))
+
+    #Mirror tree
+    display(root)
+    print("\n")
+    root_M = copy.deepcopy(root)
+    mirror(root_M)
+    display(root_M)
