@@ -52,6 +52,15 @@ def symmetrical(root1, root2):
 def isSymmetrical(root):
     return symmetrical(root, root)
 
+def isBalanced(root):
+    if (not root):
+        return 1
+    else:
+        result = height(root.right) - height(root.left)
+        return (abs(result) <= 1 and isBalanced(root.left) and isBalanced(root.right))
+
+
+
 if __name__ == '__main__':
     ''' Construct the following tree
               1
@@ -104,4 +113,10 @@ if __name__ == '__main__':
     root_sym.right.right = Node(2)
     print("\n")
     display(root_sym)
+    print("\n")
     print(isSymmetrical(root_sym))
+
+    #Balanced Tree
+    root_balanced = copy.deepcopy(root)
+    print("L: ", height(root.left), "R: ", height(root.right))
+    print(isBalanced(root))
