@@ -83,6 +83,16 @@ def isSumProperty(root):
             condition = 0
         return (condition and isSumProperty(root.left) and isSumProperty(root.right))
 
+def isBST(root):
+    if (root.left == None and root.right == None):
+        return 1
+    elif (root.left == None and root.right):
+        return(root.right.data > root.data and isBST(root.right))
+    elif(root.right == None and root.left):
+        return(root.left.data < root.data and isBST(root.left))
+    else:
+        return(root.left.data < root.data and root.right.data > root.data and isBST(root.left) and isBST(root.right))
+
 
 if __name__ == '__main__':
     ''' Construct the following tree
@@ -162,3 +172,24 @@ if __name__ == '__main__':
     root_sum.right.left = Node(0)
     root_sum.right.right = Node(3)
     print(isSumProperty(root_sum))  #True
+
+    #Binary Search Tree
+    print("Binary Search Tree:")
+    root_bst = copy.deepcopy(root)
+    print(isBST(root_bst))
+    ''' Construct the following tree
+                       6
+                     /   \
+                    /     \
+                   3       9
+                  / \     / \
+                 1   4   0   10  
+             '''
+    root_bst = Node(6)
+    root_bst.left = Node(3)
+    root_bst.right = Node(9)
+    root_bst.left.left = Node(1)
+    root_bst.left.right = Node(4)
+    root_bst.right.left = Node(0)
+    root_bst.right.right = Node(10)
+    print(isBST(root_bst))  #True
