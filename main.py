@@ -41,6 +41,16 @@ def mirror(root):
         mirror(root.right)
         switch(root)
 
+def symmetrical(root1, root2):
+    if (root1 == None and root2 == None):
+        return True
+    elif (root1 == None or root2 == None):
+        return False
+    else:
+        return (root1.data == root2.data and symmetrical(root1.left, root2.right) and symmetrical(root1.right, root2.left))
+
+def isSymmetrical(root):
+    return symmetrical(root, root)
 
 if __name__ == '__main__':
     ''' Construct the following tree
@@ -74,3 +84,24 @@ if __name__ == '__main__':
     root_M = copy.deepcopy(root)
     mirror(root_M)
     display(root_M)
+
+    #Symmetrical trees
+    ''' Construct the following tree
+                  1
+                /   \
+               /     \
+              3       3
+             / \     / \
+            2   8   8   2   
+        '''
+
+    root_sym = Node(1)
+    root_sym.left = Node(3)
+    root_sym.right = Node(3)
+    root_sym.left.left = Node(2)
+    root_sym.left.right = Node(8)
+    root_sym.right.left = Node(8)
+    root_sym.right.right = Node(2)
+    print("\n")
+    display(root_sym)
+    print(isSymmetrical(root_sym))
