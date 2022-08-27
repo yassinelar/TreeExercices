@@ -1,20 +1,24 @@
-# This is a sample Python script.
-
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
+import copy
 class Node:
     def __init__(self, val):
         self.data = val
         self.right = None
         self.left = None
 
+
 def height(root):
     if (root == None) :
         return 0
     else:
         return 1 + max(height(root.left), height(root.right))
+
+def isIdentical(root1, root2):
+    if ((root1 != None and root2 != None and root1.data != root2.data) or (root1 != None and root2 == None) or (root2 != None and root1 == None)):
+        return False
+    elif (root1 == None and root2 == None):
+        return True
+    else:
+        return True and isIdentical(root1.left, root2.left) and isIdentical(root1.right, root2.right)
 
 
 if __name__ == '__main__':
@@ -34,4 +38,10 @@ if __name__ == '__main__':
     root.left.right = Node(8)
     root.right.left = Node(1)
 
-    print (height(root))
+    # Height of binary tree
+    print(height(root))
+
+    # identical trees
+    root1 = copy.deepcopy(root)
+    root1.right.right = Node(6)
+    print(isIdentical(root, root1))
