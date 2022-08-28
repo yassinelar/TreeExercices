@@ -94,6 +94,35 @@ def isBST(root):
         return(root.left.data < root.data and root.right.data > root.data and isBST(root.left) and isBST(root.right))
 
 
+class SolutionLVER:   #Largest value each row
+    def __init__(self):
+        self.list = []
+
+    def height(self, root):
+        if (root == None):
+            return 0
+        else:
+            return 1 + max(self.height(root.left), self.height(root.right))
+
+    def largestValues(self, root):
+        l_f = []
+        h = self.height(root)
+        for i in range(1, h + 1):
+            L = SolutionLVER()
+            result = L.list
+            self.maximum(root, i, result)
+            l_f.append(max(result))
+        return l_f
+
+    def maximum(self, root, level, result):
+        if (root == None):
+            return None
+        if (level == 1):
+            result.append(root.data)
+        elif (level > 1):
+            self.maximum(root.left, level - 1, result)
+            self.maximum(root.right, level - 1, result)
+
 if __name__ == '__main__':
     ''' Construct the following tree
               1
@@ -193,3 +222,8 @@ if __name__ == '__main__':
     root_bst.right.left = Node(0)
     root_bst.right.right = Node(10)
     print(isBST(root_bst))  #True
+
+    print("Largest value in each row: ")
+    root_LVER = copy.deepcopy(root)
+    s = SolutionLVER()
+    print(s.largestValues(root_LVER))
