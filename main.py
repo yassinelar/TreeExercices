@@ -98,15 +98,9 @@ class SolutionLVER:   #Largest value each row
     def __init__(self):
         self.list = []
 
-    def height(self, root):
-        if (root == None):
-            return 0
-        else:
-            return 1 + max(self.height(root.left), self.height(root.right))
-
     def largestValues(self, root):
         l_f = []
-        h = self.height(root)
+        h = height(root)
         for i in range(1, h + 1):
             L = SolutionLVER()
             result = L.list
@@ -122,6 +116,41 @@ class SolutionLVER:   #Largest value each row
         elif (level > 1):
             self.maximum(root.left, level - 1, result)
             self.maximum(root.right, level - 1, result)
+
+
+class SolutionZigzag:
+    # Function to store the zig zag order traversal of tree in a list.
+    def __init__(self):
+        self.list = [];
+
+    def zigZagTraversal(self, root):
+        h = height(root)
+        L = SolutionZigzag()
+        result = L.list
+        for i in range(1, h + 1):
+            if i % 2 == 1:
+                self.displayLeft(root, i, result)
+            else:
+                self.displayRight(root, i, result)
+        return result
+
+    def displayLeft(self, root, level, result):
+        if (root is None):
+            return None
+        elif (level == 1):
+            result.append(root.data)
+        elif (level > 1):
+            self.displayLeft(root.left, level - 1, result)
+            self.displayLeft(root.right, level - 1, result)
+
+    def displayRight(self, root, level, result):
+        if (root is None):
+            return None
+        elif (level == 1):
+            result.append(root.data)
+        elif (level > 1):
+            self.displayRight(root.right, level - 1, result)
+            self.displayRight(root.left, level - 1, result)
 
 if __name__ == '__main__':
     ''' Construct the following tree
@@ -227,3 +256,8 @@ if __name__ == '__main__':
     root_LVER = copy.deepcopy(root)
     s = SolutionLVER()
     print(s.largestValues(root_LVER))
+
+    print("Zigzag traversal: ")
+    root_zigzag = copy.deepcopy(root)
+    s = SolutionZigzag()
+    print(s.zigZagTraversal(root_zigzag))
